@@ -1,5 +1,12 @@
 # API changelog
 
+## 2.75.08 (2026-08-05)
+- Added new optional query parameter `status` to `GET /invoice`. Filters on whether the invoice is closed.
+  - `ALL` (default) — no filtering. Existing callers see no change.
+  - `CLOSED` — only invoices that are closed.
+  - `OUTSTANDING` — only invoices that are not closed.
+    - `OUTSTANDING` is not the same as unpaid. It mirrors the outstanding group in the Invoice Overview rather than its narrower "unpaid" view, so credit notes are included.
+
 ## 2.75.07 (2026-07-03)
 - Changes to `/project/subcontract`:
   - Added `supplier` field to `ProjectSubContractDTO`. Required when creating a sub-contract; must reference a supplier. This makes it possible to create sub-contracts via the API.
