@@ -1,5 +1,20 @@
 # API changelog
 
+## 2.75.10 (2026-09-07)
+  - Added `includeCommonAttachments` to `OrderDTO`. Controls whether the company-wide standard invoice attachments
+  (defined in Invoice Settings) are carried onto invoices created from this order.
+    - Defaults to `true`. Existing callers see no change — a partial `PUT` that omits the field leaves the stored value
+  untouched.
+    - `false` excludes every standard attachment from invoices produced from the order. Per-file attachments uploaded to
+  the order itself are unaffected.
+    - Has no effect unless the company-level setting for including common attachments on invoices is enabled.
+  - `attachmentRelation` on `GET /order/{id}` and `GET /order` now always lists the company-wide standard attachment rows,
+  regardless of `includeCommonAttachments`.
+    - Previously those rows were omitted when the flag was off. **Behavior change for existing callers**:
+  `attachmentRelation` is a display listing and no longer indicates what will be carried onto the invoice — read
+  `includeCommonAttachments` for that. The field remains `[BETA]` and read-only.
+
+
 ## 2.75.08 (2026-08-05)
 - Added new optional query parameter `status` to `GET /invoice`. Filters on whether the invoice is closed.
   - `ALL` (default) — no filtering. Existing callers see no change.
